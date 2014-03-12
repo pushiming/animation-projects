@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flappy Bird Using Easel.js</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400" style="border: 1px solid black;"></canvas>
+<script type="text/javascript" src="./bower_components/easeljs/lib/easeljs-0.7.1.min.js"></script>
+<script type="text/javascript">
+    (function () {
+
+        var canvas = document.getElementById('canvas');
+        var stage = new createjs.Stage(canvas);
+        var w = stage.canvas.width,
+                h = stage.canvas.height;
+
+        var ssData = {
+            images: ["./assets/sprite_bird.png"],
+            frames: {
+                width: 86, height: 60
+            },
+            animations: {
+                fly: [0, 2, 'fly', 1]
+            },
+            framerate: 5
+        };
+        var ss = new createjs.SpriteSheet(ssData);
+        var bird = new createjs.Sprite(ss, "fly");
+
+        bird.setTransform(0, h / 2, 0.5, 0.5);
+        bird.vy = 0;
+        bird.vx = 150;
+        bird.ay = 40;
+
+        stage.addChild(bird);
+
+        createjs.Ticker.timingMode = createjs.Ticker.RAF;
+        createjs.Ticker.addEventListener("tick", tick);
+
+        function tick(e) {
+
+            var dS = e.delta / 1000;
+            var currentX = bird.x + bird.vx * dS;
+
+            bird.width = bird.getBounds().width * bird.scaleX;
+            bird.x = (currentX >= w) ? -bird.width : currentX;
+
+            bird.vy += bird.ay;
+            var currentY = bird.y + bird.vy * dS;
+            bird.y = (currentY >= h / 2) ? h / 2 : currentY;
+
+            stage.update(e);
+        }
+
+        stage.on('stagemousedown', function (e) {
+            bird.vy = -600;
+        });
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "cocos2d-html5",
+  "homepage": "https://github.com/cocos2d/cocos2d-html5",
+  "_release": "ae66e8ba9a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "ae66e8ba9a970e4c26a99a55d4b33ee69ac2bf25"
+  },
+  "_source": "git://github.com/cocos2d/cocos2d-html5.git",
+  "_target": "*",
+  "_originalSource": "cocos2d-html5",
+  "_direct": true
+}

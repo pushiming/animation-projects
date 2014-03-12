@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #654198;
+            text-align: center;
+        }
+
+        canvas {
+            margin: 9px;
+            border: 1px solid #000;
+            background-color: #fff;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+<canvas width="300" height="400" id="canvas"></canvas>
+<script src="./bower_components/zepto/zepto.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        function Square(x, y, w, h) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+        }
+
+        Square.prototype.draw = function (context) {
+            var l = this.x - this.w / 2;
+            var t = this.y - this.h / 2;
+
+            context.beginPath();
+            context.moveTo(l, t);
+            context.lineTo(l + this.w, t);
+            context.lineTo(l + this.w, t + this.h);
+            context.lineTo(l, t + this.h);
+            context.lineTo(l, t);
+            context.closePath();
+            context.stroke();
+            context.fill();
+        };
+
+        window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+
+        var canvas = $('#canvas')[0];
+        var context = canvas.getContext('2d');
+
+        context.lineWidth = 2;
+        context.strokeStyle = '#f40';
+        context.fillStyle = '#d00';
+
+        var s = new Square(0, 0, 10, 10);
+
+        // animation
+        (function drawFrame() {
+            window.requestAnimationFrame(drawFrame, canvas);
+//            context.clearRect(0, 0, canvas.width, canvas.height);
+
+        })();
+
+        var captureTouchCoordinate = function(e) {
+
+            var touch = e.touches[0],
+                    targetCanvas = e.target;
+
+            return {
+                x: touch.pageX - targetCanvas.offsetLeft,
+                y: touch.pageY - targetCanvas.offsetTop
+            };
+        };
+
+        $(canvas)
+                .on('touchstart', function (e) {
+                    var co = captureTouchCoordinate(e);
+
+                    context.beginPath();
+                    context.moveTo(co.x, co.y);
+                })
+                .on('touchend', function (e) {
+                    context.closePath();
+                })
+                .on('touchmove', function (e) {
+                    var co = captureTouchCoordinate(e);
+
+                    context.lineTo(co.x, co.y);
+                    context.stroke();
+                });
+
+    });
+</script>
+</body>
+</html>
