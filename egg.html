@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<div id="logger">
+
+</div>
+<script type="text/javascript">
+
+    (function (w, d) {
+
+        var SHAKE_THRESHOLD = 1000;
+        var lastUpdate = 0;
+        var x, y, z, last_x, last_y, last_z;
+        var logger = d.getElementById('logger'), count = 0;
+
+        w.addEventListener('devicemotion', function (e) {
+            var acceleration = e.accelerationIncludingGravity;
+
+            var curTime = new Date().getTime();
+
+            if ((curTime - lastUpdate) > 100) {
+
+                var diffTime = curTime - lastUpdate;
+                lastUpdate = curTime;
+
+                x = acceleration.x;
+                y = acceleration.y;
+                z = acceleration.z;
+
+                var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+
+                if (speed > SHAKE_THRESHOLD) {
+                    logger.innerHTML += '' +
+                            'shake ' + ++count +
+                            '<br>';
+                }
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        });
+
+    })(window, document);
+</script>
+</body>
+</html>
