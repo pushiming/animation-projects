@@ -1,0 +1,15 @@
+{
+  "name": "box2dweb",
+  "main": "Box2dWeb-2.1.a.3.js",
+  "homepage": "https://github.com/gridsane/box2dweb",
+  "_release": "8b6405ef58",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8b6405ef58b67f240a24cf1892c92be6c4dac326"
+  },
+  "_source": "git://github.com/gridsane/box2dweb.git",
+  "_target": "*",
+  "_originalSource": "box2dweb",
+  "_direct": true
+}
